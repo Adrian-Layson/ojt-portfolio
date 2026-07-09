@@ -1,0 +1,210 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    display: flex;
+    background-color: #f8fafc;
+    color: #1e293b;
+}
+
+/* Sidebar Styling */
+.sidebar {
+    width: 280px;
+    height: 100vh;
+    background-color: #0f172a;
+    color: #fff;
+    position: fixed;
+    padding: 30px 20px;
+    border-right: 1px solid #334155;
+}
+
+.profile-title {
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.profile-title h3 {
+    font-size: 1.3rem;
+    margin-bottom: 5px;
+    color: #1e5598; /* Coordinated with corporate logo blue */
+}
+
+.profile-title p {
+    font-size: 0.85rem;
+    color: #94a3b8;
+}
+
+.sidebar ul {
+    list-style: none;
+}
+
+.sidebar ul li {
+    margin: 12px 0;
+}
+
+.sidebar ul li a {
+    color: #cbd5e1;
+    text-decoration: none;
+    font-size: 1rem;
+    display: block;
+    padding: 12px 15px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.sidebar ul li a:hover {
+    background-color: #1e293b;
+    color: #38bdf8;
+    padding-left: 20px;
+}
+
+/* Main Content Styling */
+.content {
+    margin-left: 280px;
+    padding: 40px;
+    width: calc(100% - 280px);
+    max-width: 1100px;
+}
+
+.card {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+    margin-bottom: 35px;
+    border: 1px solid #e2e8f0;
+}
+
+h2 {
+    color: #0f172a;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background: #e2e8f0;
+    margin-bottom: 20px;
+}
+
+p {
+    line-height: 1.6;
+    color: #475569;
+    margin-bottom: 15px;
+}
+
+/* profile-details paragraph customization */
+.profile-details p {
+    margin-bottom: 10px;
+}
+
+/* Week Selector Tabs */
+.week-selector {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.week-btn {
+    background-color: #f1f5f9;
+    border: 1px solid #cbd5e1;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    color: #64748b;
+    transition: all 0.2s;
+}
+
+.week-btn:hover, .week-btn.active {
+    background-color: #1e5598;
+    color: #ffffff;
+    border-color: #1e5598;
+}
+
+/* PDF Viewer Styling */
+.pdf-container {
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #cbd5e1;
+}
+
+iframe {
+    border: none;
+    display: block;
+}
+
+/* Document Grid Layout */
+.doc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.doc-item {
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    padding: 20px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.doc-item h4 {
+    margin-bottom: 8px;
+    color: #0f172a;
+}
+
+.doc-item p {
+    font-size: 0.85rem;
+    color: #64748b;
+    margin-bottom: 15px;
+}
+
+/* Button Styling */
+.btn {
+    display: inline-block;
+    background-color: #0f172a;
+    color: white;
+    padding: 10px 16px;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-align: center;
+    transition: background 0.2s;
+}
+
+.btn:hover {
+    background-color: #1e5598;
+    color: #ffffff;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+    body {
+        flex-direction: column;
+    }
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        padding: 20px;
+    }
+    .profile-title {
+        margin-bottom: 20px;
+    }
+    .content {
+        margin-left: 0;
+        width: 100%;
+        padding: 20px;
+    }
+}

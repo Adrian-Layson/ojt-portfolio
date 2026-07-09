@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OJT Documentation Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar">
+        <div class="profile-title">
+            <h3>Adrian C. Layson</h3>
+            <p>Computer Engineering OJT</p>
+        </div>
+        <ul>
+            <li><a href="#about">Profile Overview</a></li>
+            <li><a href="#weekly-logs">Weekly Progress Reports</a></li>
+            <li><a href="#clearances">Official Documentation</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="content">
+        
+        <!-- About Section -->
+        <section id="about" class="card">
+            <h2>OJT Profile</h2>
+            <hr>
+            <div class="profile-details">
+                <p><strong>Company:</strong> Yek Yeu Merchandising, Inc.</p>
+                <p><strong>Location:</strong> 500 San Fernando St., Binondo, Manila</p>
+                <p><strong>Field:</strong> Computer Engineering</p>
+                <p><strong>Status:</strong> Active Documentation Repository</p>
+                <p>Welcome to my official OJT portal. This space serves as a professional dashboard for archiving my technical tasks, daily deliverables, and administrative clearances during my internship at Yek Yeu Merchandising, Inc.</p>
+            </div>
+        </section>
+
+        <!-- Weekly Logs Section -->
+        <section id="weekly-logs" class="card">
+            <h2>Weekly Narrative Reports</h2>
+            <hr>
+            <p>Select a week to review the corresponding embedded report directly in the browser.</p>
+            
+            <!-- Quick-select Tabs for Weeks -->
+            <div class="week-selector">
+                <button class="week-btn active">Week 1</button>
+                <button class="week-btn">Week 2</button>
+                <button class="week-btn">Week 3</button>
+                <button class="week-btn">Week 4</button>
+            </div>
+
+            <!-- PDF Viewer Container -->
+            <div class="pdf-container">
+                <!-- Replace 'documents/week1-report.pdf' with your actual local file or drive embed link later -->
+                <iframe src="documents/week1-report.pdf" width="100%" height="600px"></iframe>
+            </div>
+        </section>
+
+        <!-- Official Documents Section (Grid Layout) -->
+        <section id="clearances" class="card">
+            <h2>Official Clearances & Forms</h2>
+            <hr>
+            <div class="doc-grid">
+                <div class="doc-item">
+                    <h4>Memorandum of Agreement (MoA)</h4>
+                    <p>Official institutional agreement between the university and company.</p>
+                    <a href="documents/moa.pdf" class="btn" download>Download PDF</a>
+                </div>
+                <div class="doc-item">
+                    <h4>Letter of Endorsement</h4>
+                    <p>University approved endorsement form introducing the trainee.</p>
+                    <a href="documents/endorsement.pdf" class="btn" download>Download PDF</a>
+                </div>
+                <div class="doc-item">
+                    <h4>Letter of Intent</h4>
+                    <p>Formal application intent submitted to the company partner.</p>
+                    <a href="documents/letter-of-intent.pdf" class="btn" download>Download PDF</a>
+                </div>
+                <div class="doc-item">
+                    <h4>PUP Consent Form</h4>
+                    <p>Signed institutional liability and training consent waiver.</p>
+                    <a href="documents/pup-consent.pdf" class="btn" download>Download PDF</a>
+                </div>
+                <div class="doc-item">
+                    <h4>Internship Agreement</h4>
+                    <p>Executed terms of training and responsibilities contract.</p>
+                    <a href="documents/internship-agreement.pdf" class="btn" download>Download PDF</a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+</body>
+</html>
