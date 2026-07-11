@@ -131,7 +131,7 @@
 
                 </section>
 
-                <!-- OFFICIAL DOCUMENTS & VIEW-ONLY UPLOAD -->
+                <!-- OFFICIAL DOCUMENTS & INLINE EMBED VIEWER -->
                 <section id="documents" class="card slide-up">
                     <h2>Official Clearances</h2>
                     <hr>
@@ -141,7 +141,7 @@
                     <div class="log-form-box" style="margin-bottom: 25px;">
                         <input type="text" id="docTitle" placeholder="Document Title (e.g. Memorandum of Agreement)" class="log-input-field">
                         <input type="text" id="docDesc" placeholder="Short Description" class="log-input-field">
-                        <input type="file" id="docFileInput" accept=".pdf,.doc,.docx,.txt,.png,.jpg" class="file-input" style="width:100%;">
+                        <input type="file" id="docFileInput" accept=".pdf,.txt,.png,.jpg" class="file-input" style="width:100%;">
                         <button onclick="uploadCustomDocument()" id="docUploadBtn" class="upload-btn">➕ Upload New Document</button>
                         <span id="docUploadStatus" class="upload-status"></span>
                     </div>
@@ -155,7 +155,7 @@
         </div>
     </div>
 
-    <!-- JAVASCRIPT: View-Only Mode Handlers -->
+    <!-- JAVASCRIPT: Inline Webpage Rendering Engine -->
     <script>
         const TARGET_HOURS = 300;
 
@@ -386,7 +386,7 @@
             });
         }
 
-        // VIEW-ONLY BASE64 DOCUMENT UPLOAD LOGIC
+        // INLINE EMBED DOCUMENT UPLOAD LOGIC
         function uploadCustomDocument() {
             const title = document.getElementById('docTitle').value.trim();
             const desc = document.getElementById('docDesc').value.trim();
@@ -416,7 +416,7 @@
                 renderDocToDOM(docData);
                 checkDocEmptyState();
 
-                statusText.innerText = 'Document Added Successfully!';
+                statusText.innerText = 'Document Embedded Successfully!';
                 statusText.style.color = '#16a34a';
 
                 uploadBtn.innerText = '➕ Upload New Document';
@@ -464,12 +464,14 @@
             const html = `
                 <div class="doc-item" id="${doc.id}">
                     <button onclick="deleteCustomDocument('${doc.id}')" class="delete-img-btn" style="top:12px; right:12px; width:24px; height:24px; font-size:0.85rem;" title="Remove document">&times;</button>
-                    <div class="doc-info" style="padding-right: 25px;">
+                    <div class="doc-info" style="padding-right: 25px; margin-bottom: 12px;">
                         <h4>${doc.title}</h4>
                         <p>${doc.desc || doc.fileName || 'Uploaded practicum file.'}</p>
                     </div>
-                    <!-- View-only attribute without download restriction -->
-                    <a href="${doc.url}" class="btn" target="_blank">View Document</a>
+                    <!-- Inline iframe embed viewer right on the website card -->
+                    <div class="doc-inline-viewer">
+                        <iframe src="${doc.url}" title="${doc.title}" style="width:100%; height:250px; border:1px solid #cbd5e1; border-radius:6px; background:#f8fafc;"></iframe>
+                    </div>
                 </div>
             `;
             container.insertAdjacentHTML('afterbegin', html);
