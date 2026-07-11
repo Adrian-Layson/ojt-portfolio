@@ -131,7 +131,7 @@
 
                 </section>
 
-                <!-- OFFICIAL DOCUMENTS & DYNAMIC UPLOAD -->
+                <!-- OFFICIAL DOCUMENTS & VIEW-ONLY UPLOAD -->
                 <section id="documents" class="card slide-up">
                     <h2>Official Clearances</h2>
                     <hr>
@@ -155,7 +155,7 @@
         </div>
     </div>
 
-    <!-- JAVASCRIPT: Robust Base64 Handling for Refresh Stability -->
+    <!-- JAVASCRIPT: View-Only Mode Handlers -->
     <script>
         const TARGET_HOURS = 300;
 
@@ -386,7 +386,7 @@
             });
         }
 
-        // PERMANENT BASE64 DOCUMENT UPLOAD LOGIC
+        // VIEW-ONLY BASE64 DOCUMENT UPLOAD LOGIC
         function uploadCustomDocument() {
             const title = document.getElementById('docTitle').value.trim();
             const desc = document.getElementById('docDesc').value.trim();
@@ -468,7 +468,8 @@
                         <h4>${doc.title}</h4>
                         <p>${doc.desc || doc.fileName || 'Uploaded practicum file.'}</p>
                     </div>
-                    <a href="${doc.url}" class="btn" target="_blank" download="${doc.fileName || 'document'}">View / Download</a>
+                    <!-- View-only attribute without download restriction -->
+                    <a href="${doc.url}" class="btn" target="_blank">View Document</a>
                 </div>
             `;
             container.insertAdjacentHTML('afterbegin', html);
