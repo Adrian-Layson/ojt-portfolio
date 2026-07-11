@@ -3,95 +3,419 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OJT Documentation Portfolio</title>
+    <title>OJT Documentation Portfolio | Adrian C. Layson</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- Sidebar Navigation -->
-    <nav class="sidebar">
-        <div class="profile-title">
-            <h3>Adrian C. Layson</h3>
-            <p>Computer Engineering OJT</p>
+    <!-- Professional Cover Page -->
+    <header class="cover-page">
+        <div class="cover-content fade-in">
+            <div class="cover-badge">Practicum Documentation Portfolio</div>
+            <div class="header-name-wrapper">
+                <div class="profile-icon">AL</div>
+                <h1>Adrian C. Layson</h1>
+            </div>
+            <p class="cover-subtitle">Bachelor of Science in Computer Engineering</p>
+            <p class="cover-company">Host Training Establishment: <strong>Yek Yeu Merchandising, Inc.</strong></p>
+            <p class="cover-hours-stat">Rendered Progress: <strong id="coverHoursDisplay">0 / 300</strong> Hours</p>
+            <a href="#dashboard" class="cover-btn">Access Dashboard ↓</a>
         </div>
-        <ul>
-            <li><a href="#about">Profile Overview</a></li>
-            <li><a href="#weekly-logs">Weekly Progress Reports</a></li>
-            <li><a href="#clearances">Official Documentation</a></li>
-        </ul>
-    </nav>
+    </header>
 
-    <!-- Main Content Area -->
-    <main class="content">
+    <!-- Main Dashboard Layout -->
+    <div class="main-layout">
         
-        <!-- About Section -->
-        <section id="about" class="card">
-            <h2>OJT Profile</h2>
-            <hr>
-            <div class="profile-details">
-                <p><strong>Company:</strong> Yek Yeu Merchandising, Inc.</p>
-                <p><strong>Location:</strong> 500 San Fernando St., Binondo, Manila</p>
-                <p><strong>Field:</strong> Computer Engineering</p>
-                <p><strong>Status:</strong> Active Documentation Repository</p>
-                <p>Welcome to my official OJT portal. This space serves as a professional dashboard for archiving my technical tasks, daily deliverables, and administrative clearances during my internship at Yek Yeu Merchandising, Inc.</p>
+        <!-- Corporate Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="profile-title">
+                <div class="sidebar-avatar">AL</div>
+                <h3>Adrian C. Layson</h3>
+                <p>Computer Engineering OJT</p>
             </div>
-        </section>
 
-        <!-- Weekly Logs Section -->
-        <section id="weekly-logs" class="card">
-            <h2>Weekly Narrative Reports</h2>
-            <hr>
-            <p>Select a week to review the corresponding embedded report directly in the browser.</p>
+            <ul class="nav-links">
+                <li><a href="#dashboard">Dashboard Overview</a></li>
+                <li><a href="#time-tracking">Time Tracking Logs</a></li>
+                <li><a href="#weekly-reports">Weekly Progress Albums</a></li>
+                <li><a href="#documents">Official Clearances</a></li>
+            </ul>
+
+            <div class="sidebar-widget">
+                <h4>Hours Tracker</h4>
+                <div class="progress-container">
+                    <div id="sidebarProgressBar" class="progress-bar" style="width: 0%;"></div>
+                </div>
+                <div class="progress-text">
+                    <span id="sidebarHoursText">0 / 300 Hrs</span>
+                    <span id="sidebarStatusText">In Progress</span>
+                </div>
+            </div>
+
+            <div class="sidebar-info-badges">
+                <div class="info-badge">
+                    <span class="badge-label">Institution</span>
+                    <span class="badge-value">PUP</span>
+                </div>
+                <div class="info-badge">
+                    <span class="badge-label">Term</span>
+                    <span class="badge-value">2026</span>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <div class="content-wrapper">
+            <main class="content">
+                
+                <!-- DASHBOARD OVERVIEW -->
+                <section id="dashboard" class="card slide-up">
+                    <h2>Dashboard Overview</h2>
+                    <hr>
+                    <div class="profile-details">
+                        <p><strong>Student Trainee:</strong> Adrian C. Layson</p>
+                        <p><strong>Institution:</strong> Polytechnic University of the Philippines (PUP)</p>
+                        <p><strong>Academic Program:</strong> BS Computer Engineering</p>
+                        <br>
+                        <p><strong>Host Company:</strong> Yek Yeu Merchandising, Inc.</p>
+                        <p><strong>Office Location:</strong> 500 San Fernando St., Binondo, Manila</p>
+                        <p><strong>Portfolio Status:</strong> Active Documentation Repository</p>
+                    </div>
+                </section>
+
+                <!-- TIME TRACKING LOGS -->
+                <section id="time-tracking" class="card slide-up">
+                    <h2>Time Tracking Logs</h2>
+                    <hr>
+                    <p class="section-desc">Chronological record of hours rendered and specific daily deliverables.</p>
+                    
+                    <div class="log-form-box">
+                        <input type="date" id="logDate" class="log-input-field">
+                        <input type="number" id="logHours" placeholder="Hours (e.g. 8)" class="log-input-field" step="0.5">
+                        <textarea id="logNote" placeholder="Describe tasks completed today (Mandatory)..." class="log-textarea-field" required></textarea>
+                        <button onclick="addLogEntry()" class="upload-btn">➕ Add New Log Entry</button>
+                    </div>
+
+                    <div id="logContainer" class="log-container"></div>
+                </section>
+
+                <!-- WEEKLY REPORTS & DYNAMIC UPLOAD -->
+                <section id="weekly-reports" class="card slide-up">
+                    <h2>Weekly Progress Albums</h2>
+                    <hr>
+                    <p class="section-desc">Visual documentation and media archives separated by practicum weeks.</p>
+                    
+                    <div class="upload-module">
+                        <input type="file" id="imageInput" accept="image/*" class="file-input">
+                        <button onclick="uploadImage()" id="uploadBtn" class="upload-btn">⬆ Upload to Active Week</button>
+                        <span id="uploadStatus" class="upload-status"></span>
+                    </div>
+                    
+                    <div class="album-controls">
+                        <button class="nav-arrow" onclick="navigateAlbum('prev')">&#8592; Prev</button>
+                        
+                        <div class="week-selector">
+                            <button class="week-btn active" data-target="album-week1" onclick="showAlbum('album-week1', this)">Week 1</button>
+                            <button class="week-btn" data-target="album-week2" onclick="showAlbum('album-week2', this)">Week 2</button>
+                            <button class="week-btn" data-target="album-week3" onclick="showAlbum('album-week3', this)">Week 3</button>
+                            <button class="week-btn" data-target="album-week4" onclick="showAlbum('album-week4', this)">Week 4</button>
+                        </div>
+
+                        <button class="nav-arrow" onclick="navigateAlbum('next')">Next &#8594;</button>
+                    </div>
+
+                    <div id="album-week1" class="album-grid active-album"></div>
+                    <div id="album-week2" class="album-grid"></div>
+                    <div id="album-week3" class="album-grid"></div>
+                    <div id="album-week4" class="album-grid"></div>
+
+                </section>
+
+                <!-- OFFICIAL DOCUMENTS -->
+                <section id="documents" class="card slide-up">
+                    <h2>Official Clearances</h2>
+                    <hr>
+                    <p class="section-desc">Required practicum documentation available for review.</p>
+                    
+                    <div class="doc-grid">
+                        <div class="doc-item">
+                            <div class="doc-info">
+                                <h4>Memorandum of Agreement</h4>
+                                <p>Official institutional agreement between the university and company.</p>
+                            </div>
+                            <a href="documents/moa.pdf" class="btn" target="_blank">View Document</a>
+                        </div>
+                        <div class="doc-item">
+                            <div class="doc-info">
+                                <h4>Letter of Endorsement</h4>
+                                <p>University approved endorsement form introducing the trainee.</p>
+                            </div>
+                            <a href="documents/endorsement.pdf" class="btn" target="_blank">View Document</a>
+                        </div>
+                        <div class="doc-item">
+                            <div class="doc-info">
+                                <h4>Letter of Intent</h4>
+                                <p>Formal application intent submitted to the company partner.</p>
+                            </div>
+                            <a href="documents/letter-of-intent.pdf" class="btn" target="_blank">View Document</a>
+                        </div>
+                        <div class="doc-item">
+                            <div class="doc-info">
+                                <h4>Internship Agreement</h4>
+                                <p>Executed terms of training and responsibilities contract.</p>
+                            </div>
+                            <a href="documents/internship-agreement.pdf" class="btn" target="_blank">View Document</a>
+                        </div>
+                        <div class="doc-item">
+                            <div class="doc-info">
+                                <h4>Student Waiver</h4>
+                                <p>Signed notary and student clearance waiver documentation.</p>
+                            </div>
+                            <a href="documents/student-waiver.pdf" class="btn" target="_blank">View Document</a>
+                        </div>
+                        <div class="doc-item">
+                            <div class="doc-info">
+                                <h4>PUP Consent Form</h4>
+                                <p>Signed institutional liability and training consent waiver.</p>
+                            </div>
+                            <a href="documents/pup-consent.pdf" class="btn" target="_blank">View Document</a>
+                        </div>
+                    </div>
+                </section>
+
+            </main>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT: Validated Functions & State Managers -->
+    <script>
+        const TARGET_HOURS = 300;
+
+        function showAlbum(albumId, buttonComponent) {
+            const albums = document.querySelectorAll('.album-grid');
+            albums.forEach(album => album.classList.remove('active-album'));
             
-            <!-- Quick-select Tabs for Weeks -->
-            <div class="week-selector">
-                <button class="week-btn active">Week 1</button>
-                <button class="week-btn">Week 2</button>
-                <button class="week-btn">Week 3</button>
-                <button class="week-btn">Week 4</button>
-            </div>
+            const buttons = document.querySelectorAll('.week-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(albumId).classList.add('active-album');
+            buttonComponent.classList.add('active');
+        }
 
-            <!-- PDF Viewer Container -->
-            <div class="pdf-container">
-                <!-- Replace 'documents/week1-report.pdf' with your actual local file or drive embed link later -->
-                <iframe src="documents/week1-report.pdf" width="100%" height="600px"></iframe>
-            </div>
-        </section>
+        function navigateAlbum(direction) {
+            const buttons = Array.from(document.querySelectorAll('.week-btn'));
+            const currentIndex = buttons.findIndex(btn => btn.classList.contains('active'));
+            let newIndex = direction === 'prev' 
+                ? (currentIndex > 0 ? currentIndex - 1 : buttons.length - 1)
+                : (currentIndex < buttons.length - 1 ? currentIndex + 1 : 0);
 
-        <!-- Official Documents Section (Grid Layout) -->
-        <section id="clearances" class="card">
-            <h2>Official Clearances & Forms</h2>
-            <hr>
-            <div class="doc-grid">
-                <div class="doc-item">
-                    <h4>Memorandum of Agreement (MoA)</h4>
-                    <p>Official institutional agreement between the university and company.</p>
-                    <a href="documents/moa.pdf" class="btn" download>Download PDF</a>
-                </div>
-                <div class="doc-item">
-                    <h4>Letter of Endorsement</h4>
-                    <p>University approved endorsement form introducing the trainee.</p>
-                    <a href="documents/endorsement.pdf" class="btn" download>Download PDF</a>
-                </div>
-                <div class="doc-item">
-                    <h4>Letter of Intent</h4>
-                    <p>Formal application intent submitted to the company partner.</p>
-                    <a href="documents/letter-of-intent.pdf" class="btn" download>Download PDF</a>
-                </div>
-                <div class="doc-item">
-                    <h4>PUP Consent Form</h4>
-                    <p>Signed institutional liability and training consent waiver.</p>
-                    <a href="documents/pup-consent.pdf" class="btn" download>Download PDF</a>
-                </div>
-                <div class="doc-item">
-                    <h4>Internship Agreement</h4>
-                    <p>Executed terms of training and responsibilities contract.</p>
-                    <a href="documents/internship-agreement.pdf" class="btn" download>Download PDF</a>
-                </div>
-            </div>
-        </section>
+            const targetButton = buttons[newIndex];
+            const targetAlbumId = targetButton.getAttribute('data-target');
+            showAlbum(targetAlbumId, targetButton);
+        }
 
-    </main>
+        document.addEventListener('DOMContentLoaded', () => {
+            loadSavedLogs();
+            loadSavedImages();
+            updateTotalHoursCount();
+        });
 
+        function addLogEntry() {
+            const date = document.getElementById('logDate').value;
+            const hours = parseFloat(document.getElementById('logHours').value);
+            const note = document.getElementById('logNote').value.trim();
+
+            if(!date || isNaN(hours)) {
+                alert('Please provide a valid date and number of hours.');
+                return;
+            }
+
+            if(!note) {
+                alert('Task description/notes are mandatory. Please describe what you did.');
+                document.getElementById('logNote').focus();
+                return;
+            }
+
+            const logData = { id: Date.now(), date, hours, note };
+            let savedLogs = JSON.parse(localStorage.getItem('ojt_time_logs')) || [];
+            savedLogs.unshift(logData);
+            localStorage.setItem('ojt_time_logs', JSON.stringify(savedLogs));
+
+            loadSavedLogs();
+            updateTotalHoursCount();
+            
+            document.getElementById('logDate').value = '';
+            document.getElementById('logHours').value = '';
+            document.getElementById('logNote').value = '';
+        }
+
+        function deleteLogEntry(id) {
+            let savedLogs = JSON.parse(localStorage.getItem('ojt_time_logs')) || [];
+            savedLogs = savedLogs.filter(log => log.id !== id);
+            localStorage.setItem('ojt_time_logs', JSON.stringify(savedLogs));
+            loadSavedLogs();
+            updateTotalHoursCount();
+        }
+
+        function loadSavedLogs() {
+            const container = document.getElementById('logContainer');
+            container.innerHTML = '';
+            const savedLogs = JSON.parse(localStorage.getItem('ojt_time_logs')) || [];
+            
+            if(savedLogs.length === 0) {
+                container.innerHTML = '<div class="empty-state">No time logs recorded yet. Add your first log above.</div>';
+                return;
+            }
+
+            savedLogs.forEach(log => renderLogToDOM(log));
+        }
+
+        function renderLogToDOM(log) {
+            const container = document.getElementById('logContainer');
+            if(container.querySelector('.empty-state')) container.innerHTML = '';
+
+            const html = `
+                <div class="log-entry" id="log-card-${log.id}">
+                    <div class="log-header">
+                        <span class="log-date">${log.date}</span>
+                        <div style="display:flex; align-items:center; gap: 12px;">
+                            <span class="log-hours">${log.hours} Hours</span>
+                            <button onclick="deleteLogEntry(${log.id})" class="delete-action-btn" title="Remove log">&times;</button>
+                        </div>
+                    </div>
+                    <div class="log-note">${log.note}</div>
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', html);
+        }
+
+        function updateTotalHoursCount() {
+            const savedLogs = JSON.parse(localStorage.getItem('ojt_time_logs')) || [];
+            const totalRendered = savedLogs.reduce((acc, curr) => acc + parseFloat(curr.hours || 0), 0);
+            
+            const coverDisplay = document.getElementById('coverHoursDisplay');
+            if(coverDisplay) coverDisplay.innerText = `${totalRendered} / ${TARGET_HOURS}`;
+
+            const percentage = Math.min(Math.round((totalRendered / TARGET_HOURS) * 100), 100);
+            const bar = document.getElementById('sidebarProgressBar');
+            const text = document.getElementById('sidebarHoursText');
+            const status = document.getElementById('sidebarStatusText');
+
+            if(bar) bar.style.width = `${percentage}%`;
+            if(text) text.innerText = `${totalRendered} / ${TARGET_HOURS} Hrs`;
+            if(status) {
+                status.innerText = totalRendered >= TARGET_HOURS ? 'Completed' : 'In Progress';
+            }
+        }
+
+        const API_KEY = '2ad75adfa9f5986babe19b7738ebb077'; 
+
+        function loadSavedImages() {
+            const savedImages = JSON.parse(localStorage.getItem('ojt_portfolio_images')) || {};
+            for (const [weekId, items] of Object.entries(savedImages)) {
+                const targetAlbum = document.getElementById(weekId);
+                if(targetAlbum) {
+                    items.forEach(item => renderImageToDOM(item.url, targetAlbum, item.id));
+                }
+            }
+            checkEmptyStates();
+        }
+
+        async function uploadImage() {
+            const fileInput = document.getElementById('imageInput');
+            const file = fileInput.files[0];
+            const statusText = document.getElementById('uploadStatus');
+            const uploadBtn = document.getElementById('uploadBtn');
+
+            if (!file) {
+                alert('Please select an image file first.');
+                return;
+            }
+
+            uploadBtn.innerText = 'Uploading...';
+            uploadBtn.disabled = true;
+            statusText.innerText = 'Syncing to cloud...';
+            statusText.style.color = '#0369a1';
+
+            const formData = new FormData();
+            formData.append('image', file);
+
+            try {
+                const response = await fetch(`https://api.imgbb.com/1/upload?key=${API_KEY}`, {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await response.json();
+                
+                if(data.success) {
+                    const imageUrl = data.data.url;
+                    const activeAlbum = document.querySelector('.active-album');
+                    const imgId = 'img_' + Date.now();
+                    
+                    saveImageToLocalStorage(activeAlbum.id, imageUrl, imgId);
+                    renderImageToDOM(imageUrl, activeAlbum, imgId);
+                    checkEmptyStates();
+
+                    statusText.innerText = 'Upload Successful!';
+                    statusText.style.color = '#16a34a';
+                } else {
+                    throw new Error('Server rejected the image.');
+                }
+            } catch (error) {
+                statusText.innerText = 'Upload Failed.';
+                statusText.style.color = '#dc2626';
+                alert('Upload failed. Check your internet connection.');
+            }
+
+            uploadBtn.innerText = '⬆ Upload to Active Week';
+            uploadBtn.disabled = false;
+            fileInput.value = '';
+            setTimeout(() => { statusText.innerText = ''; }, 3000);
+        }
+
+        function saveImageToLocalStorage(weekId, imgUrl, imgId) {
+            let savedImages = JSON.parse(localStorage.getItem('ojt_portfolio_images')) || {};
+            if (!savedImages[weekId]) savedImages[weekId] = [];
+            savedImages[weekId].push({ id: imgId, url: imgUrl });
+            localStorage.setItem('ojt_portfolio_images', JSON.stringify(savedImages));
+        }
+
+        function deleteImageEntry(weekId, imgId) {
+            let savedImages = JSON.parse(localStorage.getItem('ojt_portfolio_images')) || {};
+            if (savedImages[weekId]) {
+                savedImages[weekId] = savedImages[weekId].filter(item => item.id !== imgId);
+                localStorage.setItem('ojt_portfolio_images', JSON.stringify(savedImages));
+            }
+            const frameNode = document.getElementById(imgId);
+            if(frameNode) frameNode.remove();
+            checkEmptyStates();
+        }
+
+        function renderImageToDOM(url, container, imgId) {
+            const generatedId = imgId || ('img_' + Math.random().toString(36).substr(2, 9));
+            const imgHTML = `
+                <div class="image-frame" id="${generatedId}">
+                    <button onclick="deleteImageEntry('${container.id}', '${generatedId}')" class="delete-img-btn" title="Remove image">&times;</button>
+                    <img src="${url}" alt="OJT Documentation">
+                    <div class="frame-caption">Practicum Log</div>
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', imgHTML);
+        }
+
+        function checkEmptyStates() {
+            const albums = document.querySelectorAll('.album-grid');
+            albums.forEach(album => {
+                const hasImages = album.querySelectorAll('.image-frame').length > 0;
+                let emptyState = album.querySelector('.empty-state');
+                
+                if (!hasImages && !emptyState) {
+                    album.innerHTML = '<div class="empty-state">No media uploaded for this week yet.</div>';
+                } else if (hasImages && emptyState) {
+                    emptyState.remove();
+                }
+            });
+        }
+    </script>
 </body>
 </html>
