@@ -146,7 +146,6 @@
                         <span id="docUploadStatus" class="upload-status"></span>
                     </div>
 
-                    <!-- Clean Container (No broken dead links) -->
                     <div class="doc-grid" id="docGridContainer">
                         <div class="empty-state" id="docEmptyState">No official documents uploaded yet. Add your files above.</div>
                     </div>
@@ -156,7 +155,7 @@
         </div>
     </div>
 
-    <!-- JAVASCRIPT: Document, Image, and Log Handlers -->
+    <!-- JAVASCRIPT: Robust Base64 Handling for Refresh Stability -->
     <script>
         const TARGET_HOURS = 300;
 
@@ -387,7 +386,7 @@
             });
         }
 
-        // DYNAMIC DOCUMENT UPLOAD LOGIC
+        // PERMANENT BASE64 DOCUMENT UPLOAD LOGIC
         function uploadCustomDocument() {
             const title = document.getElementById('docTitle').value.trim();
             const desc = document.getElementById('docDesc').value.trim();
@@ -403,24 +402,37 @@
 
             uploadBtn.innerText = 'Processing...';
             uploadBtn.disabled = true;
+            statusText.innerText = 'Encoding file...';
+            statusText.style.color = '#0369a1';
 
-            const fileUrl = URL.createObjectURL(file);
-            const docId = 'doc_' + Date.now();
-            const docData = { id: docId, title, desc, url: fileUrl };
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function () {
+                const base64Url = reader.result;
+                const docId = 'doc_' + Date.now();
+                const docData = { id: docId, title, desc, url: base64Url, fileName: file.name };
 
-            saveDocToLocalStorage(docData);
-            renderDocToDOM(docData);
-            checkDocEmptyState();
+                saveDocToLocalStorage(docData);
+                renderDocToDOM(docData);
+                checkDocEmptyState();
 
-            statusText.innerText = 'Document Added Successfully!';
-            statusText.style.color = '#16a34a';
+                statusText.innerText = 'Document Added Successfully!';
+                statusText.style.color = '#16a34a';
 
-            uploadBtn.innerText = '➕ Upload New Document';
-            uploadBtn.disabled = false;
-            document.getElementById('docTitle').value = '';
-            document.getElementById('docDesc').value = '';
-            fileInput.value = '';
-            setTimeout(() => { statusText.innerText = ''; }, 3000);
+                uploadBtn.innerText = '➕ Upload New Document';
+                uploadBtn.disabled = false;
+                document.getElementById('docTitle').value = '';
+                document.getElementById('docDesc').value = '';
+                fileInput.value = '';
+                setTimeout(() => { statusText.innerText = ''; }, 3000);
+            };
+            reader.onerror = function () {
+                statusText.innerText = 'Encoding Failed.';
+                statusText.style.color = '#dc2626';
+                uploadBtn.innerText = '➕ Upload New Document';
+                uploadBtn.disabled = false;
+                alert('Failed to read the file.');
+            };
         }
 
         function saveDocToLocalStorage(doc) {
@@ -454,9 +466,9 @@
                     <button onclick="deleteCustomDocument('${doc.id}')" class="delete-img-btn" style="top:12px; right:12px; width:24px; height:24px; font-size:0.85rem;" title="Remove document">&times;</button>
                     <div class="doc-info" style="padding-right: 25px;">
                         <h4>${doc.title}</h4>
-                        <p>${doc.desc || 'Uploaded practicum file.'}</p>
+                        <p>${doc.desc || doc.fileName || 'Uploaded practicum file.'}</p>
                     </div>
-                    <a href="${doc.url}" class="btn" target="_blank">View Document</a>
+                    <a href="${doc.url}" class="btn" target="_blank" download="${doc.fileName || 'document'}">View / Download</a>
                 </div>
             `;
             container.insertAdjacentHTML('afterbegin', html);
