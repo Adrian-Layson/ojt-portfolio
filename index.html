@@ -5,6 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OJT Documentation Portfolio | Adrian C. Layson</title>
     <link rel="stylesheet" href="style.css">
+    
+    <!-- Firebase Cloud Integration SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, orderBy, query } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "YOUR_FIREBASE_API_KEY",
+            authDomain: "your-project.firebaseapp.com",
+            projectId: "your-project-id",
+            storageBucket: "your-project.appspot.com",
+            messagingSenderId: "123456789",
+            appId: "1:123456789:web:abcdef"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        window.db = db;
+        window.firebaseModules = { collection, addDoc, getDocs, deleteDoc, doc, orderBy, query };
+    </script>
 </head>
 <body>
 
@@ -154,9 +175,10 @@
         </div>
     </div>
 
-    <!-- JAVASCRIPT: Patched and Debugged Handlers -->
+    <!-- JAVASCRIPT: Unified Cloud Sync & App Logic -->
     <script>
         const TARGET_HOURS = 300;
+        const API_KEY = '2ad75adfa9f5986babe19b7738ebb077'; 
 
         function showAlbum(albumId, buttonComponent) {
             const albums = document.querySelectorAll('.album-grid');
@@ -185,10 +207,10 @@
             loadSavedLogs();
             loadSavedImages();
             loadSavedDocuments();
-            updateTotalHoursCount();
         });
 
-        function addLogEntry() {
+        // TIME TRACKING CLOUD FUNCTIONS
+        async function addLogEntry() {
             const date = document.getElementById('logDate').value;
             const hours = parseFloat(document.getElementById('logHours').value);
             const note = document.getElementById('logNote').value.trim();
@@ -199,44 +221,66 @@
             }
 
             if(!note) {
-                alert('Task description/notes are mandatory. Please describe what you did.');
+                alert('Task description/notes are mandatory.');
                 document.getElementById('logNote').focus();
                 return;
             }
 
-            const logData = { id: Date.now() + Math.random().toString(36).substr(2, 4), date, hours, note };
-            let savedLogs = JSON.parse(localStorage.getItem('ojt_time_logs')) || [];
-            savedLogs.unshift(logData);
-            localStorage.setItem('ojt_time_logs', JSON.stringify(savedLogs));
+            try {
+                const { collection, addDoc } = window.firebaseModules;
+                await addDoc(collection(window.db, "time_logs"), {
+                    date,
+                    hours,
+                    note,
+                    timestamp: Date.now()
+                });
 
-            loadSavedLogs();
-            updateTotalHoursCount();
-            
-            document.getElementById('logDate').value = '';
-            document.getElementById('logHours').value = '';
-            document.getElementById('logNote').value = '';
+                loadSavedLogs();
+                document.getElementById('logDate').value = '';
+                document.getElementById('logHours').value = '';
+                document.getElementById('logNote').value = '';
+            } catch (e) {
+                console.error("Error adding log: ", e);
+            }
         }
 
-        function deleteLogEntry(id) {
-            let savedLogs = JSON.parse(localStorage.getItem('ojt_time_logs')) || [];
-            savedLogs = savedLogs.filter(log => String(log.id) !== String(id));
-            localStorage.setItem('ojt_time_logs', JSON.stringify(savedLogs));
-            loadSavedLogs();
-            updateTotalHoursCount();
-        }
-
-        function loadSavedLogs() {
+        async function loadSavedLogs() {
             const container = document.getElementById('logContainer');
             if (!container) return;
-            container.innerHTML = '';
-            const savedLogs = JSON.parse(localStorage.getItem('ojt_time_logs')) || [];
-            
-            if(savedLogs.length === 0) {
-                container.innerHTML = '<div class="empty-state">No time logs recorded yet. Add your first log above.</div>';
-                return;
-            }
+            container.innerHTML = 'Loading time logs...';
 
-            savedLogs.forEach(log => renderLogToDOM(log));
+            try {
+                const { collection, getDocs, query, orderBy } = window.firebaseModules;
+                const q = query(collection(window.db, "time_logs"), orderBy("timestamp", "desc"));
+                const querySnapshot = await getDocs(q);
+                
+                container.innerHTML = '';
+                if (querySnapshot.empty) {
+                    container.innerHTML = '<div class="empty-state">No time logs recorded yet. Add your first log above.</div>';
+                    updateTotalHoursCount([]);
+                    return;
+                }
+
+                const logs = [];
+                querySnapshot.forEach((docSnap) => {
+                    const log = { id: docSnap.id, ...docSnap.data() };
+                    logs.push(log);
+                    renderLogToDOM(log);
+                });
+                updateTotalHoursCount(logs);
+            } catch (e) {
+                container.innerHTML = '<div class="empty-state">Failed to load logs from cloud.</div>';
+            }
+        }
+
+        async function deleteLogEntry(id) {
+            try {
+                const { doc, deleteDoc } = window.firebaseModules;
+                await deleteDoc(doc(window.db, "time_logs", id));
+                loadSavedLogs();
+            } catch (e) {
+                console.error("Error deleting log: ", e);
+            }
         }
 
         function renderLogToDOM(log) {
@@ -259,9 +303,8 @@
             container.insertAdjacentHTML('beforeend', html);
         }
 
-        function updateTotalHoursCount() {
-            const savedLogs = JSON.parse(localStorage.getItem('ojt_time_logs')) || [];
-            const totalRendered = savedLogs.reduce((acc, curr) => acc + parseFloat(curr.hours || 0), 0);
+        function updateTotalHoursCount(logsArray) {
+            const totalRendered = logsArray.reduce((acc, curr) => acc + parseFloat(curr.hours || 0), 0);
             
             const coverDisplay = document.getElementById('coverHoursDisplay');
             if(coverDisplay) coverDisplay.innerText = `${totalRendered} / ${TARGET_HOURS}`;
@@ -278,8 +321,7 @@
             }
         }
 
-        const API_KEY = '2ad75adfa9f5986babe19b7738ebb077'; 
-
+        // WEEKLY ALBUMS (LOCALSTORAGE FALLBACK)
         function loadSavedImages() {
             const savedImages = JSON.parse(localStorage.getItem('ojt_portfolio_images')) || {};
             for (const [weekId, items] of Object.entries(savedImages)) {
@@ -304,7 +346,7 @@
 
             uploadBtn.innerText = 'Uploading...';
             uploadBtn.disabled = true;
-            statusText.innerText = 'Syncing to cloud...';
+            statusText.innerText = 'Syncing...';
             statusText.style.color = '#0369a1';
 
             const formData = new FormData();
@@ -334,7 +376,7 @@
             } catch (error) {
                 statusText.innerText = 'Upload Failed.';
                 statusText.style.color = '#dc2626';
-                alert('Upload failed. Check your internet connection.');
+                alert('Upload failed. Check your connection.');
             }
 
             uploadBtn.innerText = '⬆ Upload to Active Week';
@@ -387,7 +429,8 @@
             });
         }
 
-        function uploadCustomDocument() {
+        // DOCUMENTS CLOUD SYNCHRONIZATION
+        async function uploadCustomDocument() {
             const title = document.getElementById('docTitle').value.trim();
             const desc = document.getElementById('docDesc').value.trim();
             const fileInput = document.getElementById('docFileInput');
@@ -402,23 +445,29 @@
 
             uploadBtn.innerText = 'Processing...';
             uploadBtn.disabled = true;
-            statusText.innerText = 'Encoding file...';
+            statusText.innerText = 'Uploading to cloud...';
             statusText.style.color = '#0369a1';
 
             const reader = new FileReader();
             reader.readAsDataURL(file);
-            reader.onload = function () {
-                const base64Url = reader.result;
-                const docId = 'doc_' + Date.now() + Math.random().toString(36).substr(2, 4);
-                const docData = { id: docId, title, desc, url: base64Url, fileName: file.name };
-
-                saveDocToLocalStorage(docData);
-                renderDocToDOM(docData);
-                checkDocEmptyState();
-
-                statusText.innerText = 'Document Embedded Successfully!';
-                statusText.style.color = '#16a34a';
-
+            reader.onload = async function () {
+                try {
+                    const { collection, addDoc } = window.firebaseModules;
+                    await addDoc(collection(window.db, "documents"), {
+                        title,
+                        desc,
+                        fileName: file.name,
+                        url: reader.result,
+                        timestamp: Date.now()
+                    });
+                    
+                    statusText.innerText = 'Document Embedded Successfully!';
+                    statusText.style.color = '#16a34a';
+                    loadSavedDocuments();
+                } catch(e) {
+                    statusText.innerText = 'Cloud upload failed.';
+                    statusText.style.color = '#dc2626';
+                }
                 uploadBtn.innerText = '➕ Upload New Document';
                 uploadBtn.disabled = false;
                 document.getElementById('docTitle').value = '';
@@ -426,36 +475,40 @@
                 fileInput.value = '';
                 setTimeout(() => { statusText.innerText = ''; }, 3000);
             };
-            reader.onerror = function () {
-                statusText.innerText = 'Encoding Failed.';
-                statusText.style.color = '#dc2626';
-                uploadBtn.innerText = '➕ Upload New Document';
-                uploadBtn.disabled = false;
-                alert('Failed to read the file.');
-            };
         }
 
-        function saveDocToLocalStorage(doc) {
-            let savedDocs = JSON.parse(localStorage.getItem('ojt_custom_documents')) || [];
-            savedDocs.unshift(doc);
-            localStorage.setItem('ojt_custom_documents', JSON.stringify(savedDocs));
-        }
-
-        function deleteCustomDocument(id) {
-            let savedDocs = JSON.parse(localStorage.getItem('ojt_custom_documents')) || [];
-            savedDocs = savedDocs.filter(d => String(d.id) !== String(id));
-            localStorage.setItem('ojt_custom_documents', JSON.stringify(savedDocs));
-            const node = document.getElementById(id);
-            if(node) node.remove();
-            checkDocEmptyState();
-        }
-
-        function loadSavedDocuments() {
+        async function loadSavedDocuments() {
             const container = document.getElementById('docGridContainer');
             if (!container) return;
-            const savedDocs = JSON.parse(localStorage.getItem('ojt_custom_documents')) || [];
-            savedDocs.forEach(doc => renderDocToDOM(doc));
-            checkDocEmptyState();
+            
+            try {
+                const { collection, getDocs, query, orderBy } = window.firebaseModules;
+                const q = query(collection(window.db, "documents"), orderBy("timestamp", "desc"));
+                const querySnapshot = await getDocs(q);
+                
+                container.innerHTML = '';
+                if (querySnapshot.empty) {
+                    container.innerHTML = '<div class="empty-state" id="docEmptyState">No official documents uploaded yet. Add your files above.</div>';
+                    return;
+                }
+
+                querySnapshot.forEach((docSnap) => {
+                    const docData = { id: docSnap.id, ...docSnap.data() };
+                    renderDocToDOM(docData);
+                });
+            } catch (e) {
+                console.error("Error loading docs", e);
+            }
+        }
+
+        async function deleteCustomDocument(id) {
+            try {
+                const { doc, deleteDoc } = window.firebaseModules;
+                await deleteDoc(doc(window.db, "documents", id));
+                loadSavedDocuments();
+            } catch (e) {
+                console.error("Error deleting document: ", e);
+            }
         }
 
         function renderDocToDOM(doc) {
@@ -476,16 +529,7 @@
                     </div>
                 </div>
             `;
-            container.insertAdjacentHTML('afterbegin', html);
-        }
-
-        function checkDocEmptyState() {
-            const container = document.getElementById('docGridContainer');
-            if (!container) return;
-            const items = container.querySelectorAll('.doc-item');
-            if (items.length === 0 && !container.querySelector('.empty-state')) {
-                container.innerHTML = '<div class="empty-state" id="docEmptyState">No official documents uploaded yet. Add your files above.</div>';
-            }
+            container.insertAdjacentHTML('beforeend', html);
         }
     </script>
 </body>
