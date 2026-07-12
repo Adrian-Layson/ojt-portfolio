@@ -167,40 +167,38 @@
             {
                 title: "Internship Agreement",
                 desc: "Official agreement for 2014 template",
-                url: "documents/Internship Agreement 2014.pdf"
+                url: "documents/internship_agreement.pdf"
             },
             {
                 title: "Letter of Endorsement",
                 desc: "University endorsement letter",
-                url: "documents/Letter of Endorsement.pdf"
+                url: "documents/letter_of_endorsement.pdf"
             },
             {
                 title: "Letter of Intent",
                 desc: "Student letter of intent",
-                url: "documents/Letter of Intent.pdf"
+                url: "documents/letter_of_intent.pdf"
             },
             {
                 title: "Memorandum of Agreement",
                 desc: "Signed MOA between company and university",
-                url: "documents/Memorandum of Agreement (MOA) ver. OCT 2024.pdf" 
+                url: "documents/moa.pdf" 
             },
             {
                 title: "PUP Consent Form",
                 desc: "Parent/Guardian consent form",
-                url: "documents/PUP Consent Form.pdf"
+                url: "documents/pup_consent.pdf"
             },
             {
                 title: "Student Waiver",
                 desc: "Official university waiver",
-                url: "documents/Student Waiver.pdf"
+                url: "documents/student_waiver.pdf"
             }
         ];
 
-        // 3. YOUR WEEKLY IMAGES (Add paths here when you have images, e.g., "images/week1-pic1.jpg")
+        // 3. YOUR WEEKLY IMAGES 
         const weeklyImages = {
-            "album-week1": [
-                // { url: "images/example-photo.jpg", caption: "First day at the office" }
-            ],
+            "album-week1": [],
             "album-week2": [],
             "album-week3": [],
             "album-week4": []
@@ -248,6 +246,7 @@
             }
 
             officialDocuments.forEach(doc => {
+                const safeUrl = encodeURI(doc.url);
                 container.innerHTML += `
                     <div class="doc-item">
                         <div class="doc-info" style="margin-bottom: 12px;">
@@ -255,7 +254,12 @@
                             <p>${doc.desc}</p>
                         </div>
                         <div class="doc-inline-viewer">
-                            <iframe src="${doc.url}" title="${doc.title}" style="width:100%; height:250px; border:1px solid #cbd5e1; border-radius:6px; background:#f8fafc;"></iframe>
+                            <iframe src="${safeUrl}" title="${doc.title}" style="width:100%; height:250px; border:1px solid #cbd5e1; border-radius:6px; background:#f8fafc;"></iframe>
+                        </div>
+                        <div style="margin-top: 15px; text-align: center;">
+                            <a href="${safeUrl}" target="_blank" style="color: #0284c7; font-weight: bold; text-decoration: none; font-size: 0.9rem; padding: 8px 12px; border: 1px solid #0284c7; border-radius: 4px; display: inline-block;">
+                                &#8599; Open Document in New Tab
+                            </a>
                         </div>
                     </div>
                 `;
