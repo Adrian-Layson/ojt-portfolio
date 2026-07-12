@@ -6,18 +6,19 @@
     <title>OJT Documentation Portfolio | Adrian C. Layson</title>
     <link rel="stylesheet" href="style.css">
     
-    <!-- Firebase Cloud Integration SDK -->
+    <!-- Firebase Cloud Integration SDK with Real Config -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
         import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, orderBy, query } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
 
         const firebaseConfig = {
-            apiKey: "YOUR_FIREBASE_API_KEY",
-            authDomain: "your-project.firebaseapp.com",
-            projectId: "your-project-id",
-            storageBucket: "your-project.appspot.com",
-            messagingSenderId: "123456789",
-            appId: "1:123456789:web:abcdef"
+            apiKey: "AIzaSyAgG40xHbUhpr8JTu3xsaPlBUad70nlBzw",
+            authDomain: "ojt-portfolio-b419e.firebaseapp.com",
+            projectId: "ojt-portfolio-b419e",
+            storageBucket: "ojt-portfolio-b419e.firebasestorage.app",
+            messagingSenderId: "243987351311",
+            appId: "1:243987351311:web:401f52e900e31723ad607a",
+            measurementId: "G-KE296MB8P2"
         };
 
         const app = initializeApp(firebaseConfig);
