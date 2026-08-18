@@ -83,12 +83,18 @@
                     </div>
                 </section>
 
-                <!-- TIME TRACKING LOGS (Read-Only) -->
+                <!-- TIME TRACKING LOGS (Read-Only & Foldable - Collapsed by Default) -->
                 <section id="time-tracking" class="card slide-up">
-                    <h2>Time Tracking Logs</h2>
-                    <hr>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <h2 style="margin: 0;">Time Tracking Logs</h2>
+                        <!-- Button starts in the Expand state -->
+                        <button onclick="toggleLogs()" id="toggleLogsBtn" style="background: #0284c7; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: bold; color: #ffffff; transition: 0.2s;">Expand ▼</button>
+                    </div>
+                    <hr style="margin-top: 15px;">
                     <p class="section-desc">Chronological record of hours rendered and specific daily deliverables.</p>
-                    <div id="logContainer" class="log-container">
+                    
+                    <!-- Container starts hidden -->
+                    <div id="logContainer" class="log-container" style="display: none;">
                         <!-- Logs will be injected here by JavaScript -->
                     </div>
                 </section>
@@ -348,6 +354,24 @@
             renderAlbums();
             updateTotalHoursCount();
         });
+
+        // Function to fold/unfold the logs
+        function toggleLogs() {
+            const container = document.getElementById('logContainer');
+            const btn = document.getElementById('toggleLogsBtn');
+            
+            if (container.style.display === 'none' || container.style.display === '') {
+                container.style.display = 'block';
+                btn.innerHTML = 'Collapse ▲';
+                btn.style.background = '#e2e8f0';
+                btn.style.color = '#334155';
+            } else {
+                container.style.display = 'none';
+                btn.innerHTML = 'Expand ▼';
+                btn.style.background = '#0284c7';
+                btn.style.color = '#ffffff';
+            }
+        }
 
         function renderLogs() {
             const container = document.getElementById('logContainer');
