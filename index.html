@@ -138,8 +138,154 @@
     <script>
         const TARGET_HOURS = 300;
 
-        // 1. ADD YOUR NEW TIME LOGS HERE
-        const timeLogs = [];
+        // 1. YOUR STATIC TIME LOGS
+        const timeLogs = [
+            {
+                date: "08/18/2026",
+                hours: 8,
+                note: "Deployed finalized shipments to drivers and logged new morning orders."
+            },
+            {
+                date: "08/17/2026",
+                hours: 8,
+                note: "Checked hardware of office computers and fixed a minor Wi-Fi connection issue."
+            },
+            {
+                date: "08/14/2026",
+                hours: 8,
+                note: "Backtracked delayed shipments from the week and checked website speed."
+            },
+            {
+                date: "08/13/2026",
+                hours: 8,
+                note: "Inserted daily orders into the database and deployed shipments to drivers."
+            },
+            {
+                date: "08/12/2026",
+                hours: 8,
+                note: "Performed network troubleshooting to fix Wi-Fi connection and logged orders."
+            },
+            {
+                date: "08/11/2026",
+                hours: 8,
+                note: "Checked website speed metrics and backtracked missing shipment logs."
+            },
+            {
+                date: "08/10/2026",
+                hours: 8,
+                note: "Inserted a large batch of weekend orders and checked computer hardware."
+            },
+            {
+                date: "08/07/2026",
+                hours: 8,
+                note: "Deployed shipments to delivery drivers and logged updated tracking data."
+            },
+            {
+                date: "08/06/2026",
+                hours: 5,
+                note: "Checked website speed metrics and backtracked delayed shipments for the logistics team."
+            },
+            {
+                date: "08/04/2026",
+                hours: 8,
+                note: "Logged incoming orders and deployed finalized shipments to drivers."
+            },
+            {
+                date: "08/03/2026",
+                hours: 3, 
+                note: "Fixed localized Wi-Fi connection issues and inserted morning orders."
+            },
+            {
+                date: "07/30/2026",
+                hours: 8,
+                note: "Performed routine hardware checks on office computers and inserted daily orders."
+            },
+            {
+                date: "07/29/2026",
+                hours: 8,
+                note: "Backtracked pending shipments and monitored website loading speeds during peak traffic."
+            },
+            {
+                date: "07/28/2026",
+                hours: 8,
+                note: "Logged new orders into the system and coordinated with drivers to deploy shipments."
+            },
+            {
+                date: "07/27/2026",
+                hours: 8,
+                note: "Troubleshot and fixed a Wi-Fi connection drop, then backtracked weekend shipments."
+            },
+            {
+                date: "07/24/2026",
+                hours: 7,
+                note: "Inserted new merchandise orders and checked hardware performance on workstation computers."
+            },
+            {
+                date: "07/23/2026",
+                hours: 4,
+                note: "Deployed morning shipments to drivers and logged updated tracking data."
+            },
+            {
+                date: "07/22/2026",
+                hours: 8,
+                note: "Tested website speed optimization and backtracked missing shipment logs."
+            },
+            {
+                date: "07/21/2026",
+                hours: 8,
+                note: "Logged daily orders and performed hardware maintenance checks on office terminals."
+            },
+            {
+                date: "07/20/2026",
+                hours: 8,
+                note: "Inserted weekend batch orders and deployed assigned shipments to the delivery drivers."
+            },
+            {
+                date: "07/17/2026",
+                hours: 8,
+                note: "Fixed Wi-Fi connection instability in the main office and logged afternoon orders."
+            },
+            {
+                date: "07/16/2026",
+                hours: 8,
+                note: "Backtracked several problematic shipments and checked website performance."
+            },
+            {
+                date: "07/15/2026",
+                hours: 8,
+                note: "Deployed mid-week shipments to drivers and inserted updated order data into the system."
+            },
+            {
+                date: "07/14/2026",
+                hours: 8,
+                note: "Checked hardware components on faulty computers and logged incoming requests."
+            },
+            {
+                date: "07/13/2026",
+                hours: 8,
+                note: "Inserted a large batch of weekend orders and backtracked delivery statuses."
+            },
+            {
+                date: "07/10/2026",
+                hours: 7,
+                note: "Tested network reliability after fixing a Wi-Fi issue and logged daily shipments."
+            },
+            {
+                date: "07/09/2026",
+                hours: 8,
+                note: "Deployed shipments to delivery drivers and monitored the company website speed."
+            },
+            {
+                date: "07/08/2026",
+                hours: 8,
+                note: "Inserted new orders into the database and checked basic computer hardware functionality."
+            },
+            {
+                date: "07/07/2026",
+                hours: 5,
+                note: "Completed company orientation and began logging initial order data."
+            }
+        ];
 
         // 2. YOUR LOCAL DOCUMENTS
         const officialDocuments = [
@@ -172,6 +318,16 @@
                 title: "Student Waiver",
                 desc: "Official university waiver",
                 url: "student_waiver.pdf"
+            },
+            {
+                title: "Medical Certificate",
+                desc: "Official medical clearance for practicum",
+                url: "medical_certificate.pdf"
+            },
+            {
+                title: "Insurance Policy",
+                desc: "Student insurance coverage",
+                url: "insurance.pdf"
             }
         ];
 
