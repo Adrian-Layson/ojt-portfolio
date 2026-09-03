@@ -5,6 +5,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OJT Documentation Portfolio | Adrian C. Layson</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* Custom Table Styles */
+        .req-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; margin-top: 15px; }
+        .req-table th, .req-table td { border: 1px solid #cbd5e1; padding: 10px; }
+        .req-table th { background: #f1f5f9; font-weight: bold; text-align: left; }
+        .phase-col { font-weight: bold; text-align: center; vertical-align: middle; }
+        .bg-before { background-color: #dbeafe; }
+        .bg-during { background-color: #fef08a; }
+        .bg-after { background-color: #dcfce7; }
+        
+        /* Modal Styles */
+        #docModal {
+            display: none; 
+            position: fixed; 
+            z-index: 9999; 
+            left: 0; 
+            top: 0; 
+            width: 100%; 
+            height: 100%; 
+            background-color: rgba(15, 23, 42, 0.9); 
+            backdrop-filter: blur(4px);
+        }
+        .modal-container {
+            width: 90%; 
+            height: 85%; 
+            margin: 60px auto 0; 
+            background: white; 
+            border-radius: 8px; 
+            overflow: hidden; 
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+        .close-modal-btn {
+            background: #ef4444; 
+            color: white; 
+            border: none; 
+            padding: 10px 20px; 
+            border-radius: 6px; 
+            font-size: 16px; 
+            font-weight: bold; 
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .close-modal-btn:hover { background: #dc2626; }
+    </style>
 </head>
 <body>
 
@@ -36,6 +80,7 @@
 
             <ul class="nav-links">
                 <li><a href="#dashboard">Dashboard Overview</a></li>
+                <li><a href="#requirements">Requirements Checklist</a></li>
                 <li><a href="#time-tracking">Time Tracking Logs</a></li>
                 <li><a href="#weekly-reports">Weekly Progress Albums</a></li>
                 <li><a href="#documents">Official Clearances</a></li>
@@ -83,23 +128,141 @@
                     </div>
                 </section>
 
-                <!-- TIME TRACKING LOGS (Read-Only & Foldable - Collapsed by Default) -->
+                <!-- REQUIREMENTS CHECKLIST -->
+                <section id="requirements" class="card slide-up">
+                    <h2>Requirements Checklist</h2>
+                    <hr>
+                    <p class="section-desc">Comprehensive checklist of required documentation for all phases of the practicum.</p>
+                    
+                    <div style="overflow-x: auto;">
+                        <table class="req-table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 10%;">Phase</th>
+                                    <th style="width: 25%;">Requirement</th>
+                                    <th style="width: 35%;">Document / File Name</th>
+                                    <th style="width: 30%;">Signatories / Remarks</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Before OJT -->
+                                <tr class="bg-before">
+                                    <td rowspan="9" class="phase-col">Before OJT</td>
+                                    <td>Memorandum of Agreement</td>
+                                    <td>Memorandum of Agreement (MOA) ver. OCT 2024</td>
+                                    <td>HTE, Dean, Notary<br><small>8 Original Copy or At least 3 copies of original and 5 Xerox Copy</small></td>
+                                </tr>
+                                <tr class="bg-before">
+                                    <td>Letter of Intent</td>
+                                    <td>Letter of Intent</td>
+                                    <td>OJT Adviser, Chairperson?</td>
+                                </tr>
+                                <tr class="bg-before">
+                                    <td>Letter of Endorsement</td>
+                                    <td>Letter of Endorsement</td>
+                                    <td>OJT Adviser, Chairperson, Dean?</td>
+                                </tr>
+                                <tr class="bg-before">
+                                    <td>Student Waiver</td>
+                                    <td>Student Waiver</td>
+                                    <td>OJT Adviser, Chairperson, Notary</td>
+                                </tr>
+                                <tr class="bg-before">
+                                    <td>Internship Agreement</td>
+                                    <td>Internship Agreement 2024</td>
+                                    <td>HTE</td>
+                                </tr>
+                                <tr class="bg-before">
+                                    <td>Consent Form</td>
+                                    <td>PUP Consent Form</td>
+                                    <td>Student, Parent/Guardian, Notary</td>
+                                </tr>
+                                <tr class="bg-before">
+                                    <td>CV</td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr class="bg-before">
+                                    <td>Insurance</td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr class="bg-before">
+                                    <td>Medical Certificate</td>
+                                    <td>Original + Photocopy</td>
+                                    <td></td>
+                                </tr>
+
+                                <!-- During OJT -->
+                                <tr class="bg-during">
+                                    <td rowspan="3" class="phase-col">During OJT</td>
+                                    <td><del>Daily Attendance</del></td>
+                                    <td><del>CPE_Daily Attendance Report.docx</del></td>
+                                    <td><del>Company Officer in Charge</del></td>
+                                </tr>
+                                <tr class="bg-during">
+                                    <td>Weekly Docu</td>
+                                    <td>Weekly Photo Documentation Report</td>
+                                    <td>Company Officer in Charge</td>
+                                </tr>
+                                <tr class="bg-during">
+                                    <td>Weekly Report</td>
+                                    <td>Weekly Report</td>
+                                    <td>Company Officer in Charge</td>
+                                </tr>
+
+                                <!-- After OJT -->
+                                <tr class="bg-after">
+                                    <td rowspan="6" class="phase-col">After OJT</td>
+                                    <td><del>Adviser Eval</del></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr class="bg-after">
+                                    <td>Training Supervisor Form</td>
+                                    <td>CPE_Evaluation Instrument for Training Supervisor.docx</td>
+                                    <td>Student</td>
+                                </tr>
+                                <tr class="bg-after">
+                                    <td>HTE Performance</td>
+                                    <td>CPE_Evaluation Instrument for HTE.docx</td>
+                                    <td>Student</td>
+                                </tr>
+                                <tr class="bg-after">
+                                    <td>OJT_Adviser Performance</td>
+                                    <td>CPE_OJT Adviser Performance Evaluation.docx</td>
+                                    <td>Student</td>
+                                </tr>
+                                <tr class="bg-after">
+                                    <td>Trainee Performace</td>
+                                    <td>CPE_Evaluation Instrument for Student Intern.docx</td>
+                                    <td>Supervisor</td>
+                                </tr>
+                                <tr class="bg-after">
+                                    <td>Performance Evaluation</td>
+                                    <td>CPE_Performance Evaluation Grading System.docx</td>
+                                    <td>Supervisor</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- TIME TRACKING LOGS -->
                 <section id="time-tracking" class="card slide-up">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <h2 style="margin: 0;">Time Tracking Logs</h2>
-                        <!-- Button starts in the Expand state -->
                         <button onclick="toggleLogs()" id="toggleLogsBtn" style="background: #0284c7; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: bold; color: #ffffff; transition: 0.2s;">Expand ▼</button>
                     </div>
                     <hr style="margin-top: 15px;">
                     <p class="section-desc">Chronological record of hours rendered and specific daily deliverables.</p>
                     
-                    <!-- Container starts hidden -->
                     <div id="logContainer" class="log-container" style="display: none;">
                         <!-- Logs will be injected here by JavaScript -->
                     </div>
                 </section>
 
-                <!-- WEEKLY REPORTS (Read-Only) -->
+                <!-- WEEKLY REPORTS -->
                 <section id="weekly-reports" class="card slide-up">
                     <h2>Weekly Progress Albums</h2>
                     <hr>
@@ -125,14 +288,19 @@
 
                 </section>
 
-                <!-- OFFICIAL DOCUMENTS (Read-Only) -->
+                <!-- OFFICIAL DOCUMENTS (Foldable) -->
                 <section id="documents" class="card slide-up">
-                    <h2>Official Clearances</h2>
-                    <hr>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <h2 style="margin: 0;">Official Clearances</h2>
+                        <button onclick="toggleDocs()" id="toggleDocsBtn" style="background: #0284c7; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: bold; color: #ffffff; transition: 0.2s;">Expand ▼</button>
+                    </div>
+                    <hr style="margin-top: 15px;">
                     <p class="section-desc">Required practicum documentation available for review.</p>
                     
-                    <div class="doc-grid" id="docGridContainer">
-                        <!-- Documents will be injected here by JavaScript -->
+                    <div id="docsWrapper" style="display: none;">
+                        <div class="doc-grid" id="docGridContainer">
+                            <!-- Documents will be injected here by JavaScript -->
+                        </div>
                     </div>
                 </section>
 
@@ -140,26 +308,51 @@
         </div>
     </div>
 
-    <!-- JAVASCRIPT: Static Data Method -->
+    <!-- FULL SCREEN MODAL OVERLAY -->
+    <div id="docModal">
+        <div style="position: absolute; top: 20px; right: 30px;">
+            <button class="close-modal-btn" onclick="closeModal()">Close ✖</button>
+        </div>
+        <div class="modal-container">
+            <iframe id="modalIframe" src="" style="width: 100%; height: 100%; border: none;"></iframe>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT -->
     <script>
         const TARGET_HOURS = 240;
 
         // 1. YOUR STATIC TIME LOGS
         const timeLogs = [
             {
-                date: "08/17/2026",
+                date: "08/28/2026",
+                hours: 8,
+                note: "Deployed finalized shipments to drivers and logged new morning orders."
+            },
+            {
+                date: "08/27/2026",
                 hours: 8,
                 note: "Checked hardware of office computers and fixed a minor Wi-Fi connection issue."
             },
             {
-                date: "08/14/2026",
-                hours: 8,
+                date: "08/26/2026",
+                hours: 4,
                 note: "Backtracked delayed shipments from the week and checked website speed."
             },
             {
+                date: "08/25/2026",
+                hours: 8,
+                note: "Inserted daily orders into the database and deployed shipments to drivers."
+            },
+            {
+                date: "08/20/2026",
+                hours: 8,
+                note: "Performed network troubleshooting to fix Wi-Fi connection and logged orders."
+            },
+            {
                 date: "08/12/2026",
-                hours: 4,
-                note: "Performed network troubleshooting to fix Wi-Fi connection and logged orders. (Half-day shift)"
+                hours: 2,
+                note: "Checked website speed metrics and backtracked missing shipment logs."
             },
             {
                 date: "08/10/2026",
@@ -168,12 +361,12 @@
             },
             {
                 date: "08/07/2026",
-                hours: 8,
+                hours: 4,
                 note: "Deployed shipments to delivery drivers and logged updated tracking data."
             },
             {
                 date: "08/06/2026",
-                hours: 5,
+                hours: 6,
                 note: "Checked website speed metrics and backtracked delayed shipments for the logistics team."
             },
             {
@@ -183,7 +376,7 @@
             },
             {
                 date: "08/03/2026",
-                hours: 3, 
+                hours: 4, 
                 note: "Fixed localized Wi-Fi connection issues and inserted morning orders."
             },
             {
@@ -340,6 +533,19 @@
             updateTotalHoursCount();
         });
 
+        // Modal Functions
+        function openModal(url) {
+            document.getElementById('modalIframe').src = url;
+            document.getElementById('docModal').style.display = 'block';
+            document.body.style.overflow = 'hidden'; // Stop background scrolling
+        }
+
+        function closeModal() {
+            document.getElementById('docModal').style.display = 'none';
+            document.getElementById('modalIframe').src = ''; // Clear source to stop loading
+            document.body.style.overflow = 'auto'; // Restore background scrolling
+        }
+
         // Function to fold/unfold the logs
         function toggleLogs() {
             const container = document.getElementById('logContainer');
@@ -352,6 +558,24 @@
                 btn.style.color = '#334155';
             } else {
                 container.style.display = 'none';
+                btn.innerHTML = 'Expand ▼';
+                btn.style.background = '#0284c7';
+                btn.style.color = '#ffffff';
+            }
+        }
+
+        // Function to fold/unfold the documents
+        function toggleDocs() {
+            const wrapper = document.getElementById('docsWrapper');
+            const btn = document.getElementById('toggleDocsBtn');
+            
+            if (wrapper.style.display === 'none' || wrapper.style.display === '') {
+                wrapper.style.display = 'block';
+                btn.innerHTML = 'Collapse ▲';
+                btn.style.background = '#e2e8f0';
+                btn.style.color = '#334155';
+            } else {
+                wrapper.style.display = 'none';
                 btn.innerHTML = 'Expand ▼';
                 btn.style.background = '#0284c7';
                 btn.style.color = '#ffffff';
@@ -400,9 +624,12 @@
                         <div class="doc-inline-viewer">
                             <iframe src="${safeUrl}" title="${doc.title}" style="width:100%; height:250px; border:1px solid #cbd5e1; border-radius:6px; background:#f8fafc;"></iframe>
                         </div>
-                        <div style="margin-top: 15px; text-align: center;">
-                            <a href="${safeUrl}" target="_blank" style="color: #0284c7; font-weight: bold; text-decoration: none; font-size: 0.9rem; padding: 8px 12px; border: 1px solid #0284c7; border-radius: 4px; display: inline-block;">
-                                &#8599; Open Document in New Tab
+                        <div style="margin-top: 15px; display: flex; gap: 8px; justify-content: center;">
+                            <button onclick="openModal('${safeUrl}')" style="background: #0f172a; color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 0.9rem; transition: 0.2s;">
+                                ⛶ View Full Screen
+                            </button>
+                            <a href="${safeUrl}" target="_blank" style="color: #0f172a; font-weight: bold; text-decoration: none; font-size: 0.9rem; padding: 8px 12px; border: 1px solid #0f172a; border-radius: 4px; display: inline-block;">
+                                &#8599; New Tab
                             </a>
                         </div>
                     </div>
